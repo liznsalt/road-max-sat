@@ -16,11 +16,7 @@ def k_shortest_paths(G, o, d, k):
                 break
         return res
     except nx.exception.NetworkXNoPath:
-<<<<<<< HEAD
-        print(f'No this path between node {o} and node {d}')
-=======
         print(f'No this path between node {o} and node {d}. skip...')
->>>>>>> .
         return []
 
 

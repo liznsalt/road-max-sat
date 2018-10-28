@@ -19,10 +19,7 @@ import networkx as nx
 
 from graph_with_value import graph_with_random_value
 from k_shortest_paths import k_shortest_paths
-<<<<<<< HEAD
-=======
 import operate
->>>>>>> .
 
 MAX_VALUE = 10000
 
@@ -47,22 +44,16 @@ def _with_value(lst, value: 'int > 0'=MAX_VALUE):
 
 
 def _have_road(path, road):
-<<<<<<< HEAD
-=======
     r"""判断path是否包含road"""
->>>>>>> .
     node1, node2 = road
     return (_fmt(node1, node2) in path) or (_fmt(node2, node1) in path)
 
 
-<<<<<<< HEAD
-=======
 def _de_road_fmt(road_fmt: str):
     r"""返回两个点id"""
     return [int(x) for x in road_fmt.split('->')]
 
 
->>>>>>> .
 class CNFParser:
 
     def __init__(self, graph: nx.Graph, od_set=None):
@@ -82,12 +73,9 @@ class CNFParser:
         # cnf样式: [ [ value, [.|.|.] ] ...]
         self.cnf_list = list()
 
-<<<<<<< HEAD
-=======
     def __repr__(self):
         return f'<CNFParser od_set:{self.od_set} max-sat-value={self.max_sat()[0]}>'
 
->>>>>>> .
     def get_od_set(self, od_set: list):
         r"""得到od集"""
         self.od_set = od_set
@@ -182,27 +170,16 @@ class CNFParser:
         return value
 
     def max_sat(self):
-<<<<<<< HEAD
-        r"""TODO:
-        :return [max_value, [path-id list]]
-        """
-        if os.getcwd() == 'D:\\road-network':
-=======
         r"""
         :return [max_value, [经过路段], [不经过路段]]
         """
         if 'sat4j' in os.listdir(os.getcwd()):
->>>>>>> .
             os.chdir('sat4j')
         message = os.popen('java -jar sat4j-maxsat.jar ../out/result.wcnf').readlines()[-3]
         message = message.split(' ')
         path_result = [int(x) for x in message[1:self._path_cnt+1]]
         value = sum([self._value(x) for x in path_result if x > 0])
-<<<<<<< HEAD
-        return [value, [x for x in path_result if x > 0], [x for x in path_result if x < 0]]
-=======
         return [value, [x for x in path_result if x > 0], [-x for x in path_result if x < 0]]
->>>>>>> .
 
     def max_sat_description(self):
         r"""描述结果"""
@@ -210,13 +187,6 @@ class CNFParser:
         return '值={}, 经过的路径编号:{!r}, 不经过的路径编号:{!r}'.format(ms[0], ms[1], ms[2])
 
     def max_sat_result_show(self, draw_graph=False):
-<<<<<<< HEAD
-        r"""TODO: 可提供画图，将经过的边标红
-        """
-        ms = self.max_sat()
-        print('值={}, 经过的路径编号:{!r}, 不经过的路径编号:{!r}'.format(ms[0], ms[1], ms[2]))
-        pass
-=======
         r"""可提供画图,将经过的边标红
         """
         ms = self.max_sat()
@@ -230,20 +200,10 @@ class CNFParser:
                 self.graph[node1][node2]['color'] = 'red'
             print('Drawing...')
             operate.draw(self.graph)
->>>>>>> .
 
 
 if __name__ == '__main__':
     # (4, 5), (100, 120), (90, 400), (50, 70)
-<<<<<<< HEAD
-    cnf_parser = CNFParser(graph_with_random_value(),
-                           od_set=[(4, 5), (100, 120), (90, 400), (50, 70)])
-    cnf_parser.parse_od_set()
-    cnf_parser.get_cnf_list()
-
-    # test
-    # print(cnf_parser.od_path)
-=======
     graph = graph_with_random_value()
     print('Get graph with random value.')
 
@@ -262,27 +222,18 @@ if __name__ == '__main__':
     print(f'Total {len(cnf_parser.paths)} paths.')
     for path in cnf_parser.od_path:
         print(path)
->>>>>>> .
     # print('-Paths:')
     # for path_id, path in cnf_parser.paths.items():
     #     print(f'{path_id}: {path}')
     # for i in cnf_parser.cnf_list:
     #     print(i[1])
 
-<<<<<<< HEAD
-    print(f'Total {len(cnf_parser.paths)} paths.')
-=======
->>>>>>> .
     cnf_parser.save_to('out/result.wcnf')
     print('Generate cnf file done!\n')
 
     print('Parse result:')
-<<<<<<< HEAD
-    print(cnf_parser.max_sat_description())
-=======
     cnf_parser.max_sat_result_show(draw_graph=True)
     print('Done!')
->>>>>>> .
     # print(os.getcwd())
     # os.chdir('sat4j')
     # result = os.popen('java -jar sat4j-maxsat.jar ../out/result.wcnf').readlines()
